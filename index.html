@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario</title>
+</head>
+
+<body>
+    <!--cajas de textos de los productos -->
+    <header>
+        <h1>Inventario</h1>
+        <br>
+        <form>
+            <label for="buscador">
+                Código del Producto
+            </label>
+            <input type="text" name="buscador"  id="txtBuscar" placeholder="1234" required>
+            <button type="button" id="btnBuscar">Buscar</button>
+            <button type="reset" id="btnClean1" style="display: none;">Limpiar</button>
+        </form>
+
+    </header>
+
+    <br>
+    <hr>
+    <br>
+   
+    <form>
+        <div>
+            <label for="Nombre">Código</label>
+            <input type="text" name="Nombre" id="codigo" placeholder="1234">
+        </div>
+
+        <div>
+            <label for="Nombre">Nombre</label>
+            <input type="text" name="Nombre" id="nombre" placeholder="Producto">    
+        </div>
+        
+        <div>
+            <label for="Precio">Precio</label>
+            <input type="number" name="Precio" id="precio" placeholder="$">
+        </div>
+
+        <div>
+            <label for="Cantidad">Cantidad</label>
+            <input type="number" name="Cantidad" id="cantidad" placeholder="1">
+        </div>
+
+        <br>
+        
+        <button type="button" id="btnAdd" >Agregar</button>
+        <button type="button" id="btnUpdate" style="display: none;">Actualizar</button>
+        <button type="button" id="btnDelete" style="display: none;">Borrar</button>
+        <button type="reset" id="btnClean2">Limpiar</button>
+
+        <br>
+        <hr>
+        <br>
+
+        <button type="button" id="btnListar">Listar</button>
+
+    </form>
+    <br>
+    <div id="detalles"></div>
+    <script src="Modelo/producto.js"></script>
+</body>
+
+</html>
