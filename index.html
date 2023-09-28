@@ -25,12 +25,14 @@
 
     <br>
     <hr>
+    <div id="notify"></div>
+    <hr>
     <br>
-   
+
     <form>
         <div>
             <label for="Nombre">Código</label>
-            <input type="text" name="Nombre" id="codigo" placeholder="1234">
+            <input type="number" name="Nombre" id="codigo" placeholder="1234" onkeypress="soloNumeros('codigo')">
         </div>
 
         <div>
@@ -60,10 +62,22 @@
         <br>
 
         <button type="button" id="btnListar">Listar</button>
+        <button type="button" id="btnOrder">↑↓</button>
 
     </form>
     <br>
-    <div id="detalles"></div>
+    <div>
+        <table style="border: 1px solid black;">
+            <thead>
+                <th>Código</th>
+                <td>Nombre</td>
+                <td>Precio</td>
+                <td>Cantidad</td>
+            </thead>
+            <tbody id="detalles">
+            </tbody>
+        </table>
+    </div>
     <script src="Modelo/producto.js"></script>
 </body>
 

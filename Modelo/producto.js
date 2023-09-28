@@ -42,7 +42,7 @@ class Inventario{
             }
         }
 
-        return "<p> El producto se ha ingresado correctamente </p>";
+        return "<p>''El producto se ha ingresado correctamente''</p>";
     }
 
     buscarProducto(codigoBuscar){
@@ -51,7 +51,7 @@ class Inventario{
                 return "<p> Codigo: " + this.productos[i].codigo + " Nombre:" + this.productos[i].nombre + " Precio:" + this.productos[i].precio + " Cantidad:" + this.productos[i].cantidad + "</p>"
             }
         }
-        return "No existe"
+        return "<p>''El producto no existe''</p>";
     }
 
     borrarProducto(codigoBorrar){
@@ -61,17 +61,34 @@ class Inventario{
                     this.productos[j] = this.productos[j+1];
                 }
                 this.productos.pop();
-                return "<p> Se ha borrado exitosamente </p>"
+                return "<p>''Se ha borrado exitosamente''</p>"
             }
         }
     }
 
     ListarProducto(){
-        let res = "<table><tr><td> Codigo </td><td> Nombre </td><td> Precio </td><td> Cantidad </td></tr>"
+        let res = "";
+
         for(let i = 0; i < this.productos.length; i++){
-            res += "<tr><td>" + this.productos[i].codigo + "</td><td>" + this.productos[i].nombre + "</td><td>" + this.productos[i].precio + "</td><td>" + this.productos[i].cantidad +"</td></tr>";
+            res += "<tr><th>" + this.productos[i].codigo + "</th><td>" 
+                            + this.productos[i].nombre + "</td><td>" 
+                            + this.productos[i].precio + "</td><td>" 
+                            + this.productos[i].cantidad +"</td></tr>";
         }
-        res += "</table>";
+
+        return res;
+    }
+
+    ListarProductoInverso(){
+        let res = "";
+
+        for(let i = this.productos.length - 1; i >= 0; i--){
+            res += "<tr><th>" + this.productos[i].codigo + "</th><td>" 
+                            + this.productos[i].nombre + "</td><td>" 
+                            + this.productos[i].precio + "</td><td>" 
+                            + this.productos[i].cantidad +"</td></tr>";
+        }
+
         return res;
     }
 
@@ -103,7 +120,6 @@ class Inventario{
                 return "<p> Se ha actualizado a Codigo: " + this.productos[i].codigo + " Nombre: " + this.productos[i].nombre + " Precio: $" + this.productos[i].precio + " Cantidad: " + this.productos[i].cantidad + " </p";
             }
         }
-        return "<p> No se ha encontrado el codigo </p>"
     }
 }
 
@@ -118,6 +134,9 @@ document.getElementById("btnUpdate").onclick = actualizarProducto;
 document.getElementById("btnClean2").onclick = limpiarProducto;
 
 document.getElementById("btnListar").onclick = listarProductos;
+document.getElementById("btnOrder").onclick = ordenarProductos;
+
+let orden = true;
 
 function buscarproducto() {
     let codigoBuscar = document.getElementById("txtBuscar").value;
@@ -136,8 +155,10 @@ function buscarproducto() {
         document.getElementById("btnUpdate").style.display = "inline";
         document.getElementById("btnDelete").style.display = "inline";
 
+        document.getElementById("notify").innerHTML = "";
+
     } else {
-        document.getElementById("detalles").innerHTML = inventario.buscarProducto(codigoBuscar)
+        document.getElementById("notify").innerHTML = inventario.buscarProducto(codigoBuscar);
     }
     
 }
@@ -186,7 +207,7 @@ function eliminarProducto() {
     precio.innerHTML = "";
     cantidad.innerHTML = "";
 
-    document.getElementById("detalles").innerHTML =  inventario.borrarProducto(codigoBorrar);
+    document.getElementById("notify").innerHTML =  inventario.borrarProducto(codigoBorrar);
 }
 
 
@@ -197,7 +218,7 @@ function agregarProducto() {
     let cantidad = document.getElementById("cantidad");
 
     let nuevoProducto = new Producto(codigo.value, nombre.value, precio.value, cantidad.value)
-    document.getElementById("detalles").innerHTML = inventario.ingresarProducto(nuevoProducto);
+    document.getElementById("notify").innerHTML = inventario.ingresarProducto(nuevoProducto);
     console.log(inventario);
 
     codigo.value = "";
@@ -227,9 +248,33 @@ function limpiarProducto() {
     nombre.innerHTML = "";
     precio.innerHTML = "";
     cantidad.innerHTML = "";
+
+    document.getElementById("notify").innerHTML = "";
 }
 
 
 function listarProductos(){
     document.getElementById("detalles").innerHTML = inventario.ListarProducto();
+
+    document.getElementById("notify").innerHTML = "";
+}
+
+function ordenarProductos() {
+
+    if (orden) {
+        document.getElementById("detalles").innerHTML = inventario.ListarProducto();
+
+        orden = false;
+    } else {
+        document.getElementById("detalles").innerHTML = inventario.ListarProductoInverso();
+
+        orden = true;
+    }
+
+    document.getElementById("notify").innerHTML = "";
+
+}
+
+function soloNumeros(inputId) {
+    let input = document.getElementById(inputId);
 }
