@@ -32,7 +32,7 @@
     <form>
         <div>
             <label for="Nombre">Código</label>
-            <input type="number" name="Nombre" id="codigo" placeholder="1234" onkeypress="soloNumeros('codigo')">
+            <input type="number" name="Nombre" id="codigo" placeholder="1234" min="0" onkeypress="soloNumeros('codigo')">
         </div>
 
         <div>
@@ -42,12 +42,12 @@
         
         <div>
             <label for="Precio">Precio</label>
-            <input type="number" name="Precio" id="precio" placeholder="$">
+            <input type="number" name="Precio" id="precio" placeholder="$" min="0" onkeypress="soloNumeros('precio')">
         </div>
 
         <div>
             <label for="Cantidad">Cantidad</label>
-            <input type="number" name="Cantidad" id="cantidad" placeholder="1">
+            <input type="number" name="Cantidad" id="cantidad" placeholder="1" min="0" onkeypress="soloNumeros('cantidad')">
         </div>
 
         <br>

@@ -23,6 +23,9 @@ class Inventario{
     }
 
     ingresarProducto(producto){ //comprobar que no se repita y agregar de forma ordenada 
+        
+        
+        
         this.productos.push(producto);
 
         for (let x=0; x<this.productos.length; x++) {
@@ -212,15 +215,50 @@ function eliminarProducto() {
 
 
 function agregarProducto() {
+
+    let msg = "";
+    let execute = true;
+
     let codigo = document.getElementById("codigo");
+
+    if (codigo.value == '' && execute) {
+        msg = "¡ERROR! - El campo 'Código' solo recibe números";
+        execute = false;
+    }
+
     let nombre = document.getElementById("nombre");
+
+    if (nombre.value == '' && execute) {
+        msg = "¡ERROR! - El campo 'Nombre' no puede ir vacío";
+        execute = false;
+    }
+
     let precio = document.getElementById("precio");
+
+    if (precio.value == '' && execute) {
+        msg = "¡ERROR! - El campo 'Precio' solo recibe números";
+        execute = false;
+    }
+
     let cantidad = document.getElementById("cantidad");
 
-    let nuevoProducto = new Producto(codigo.value, nombre.value, precio.value, cantidad.value)
-    document.getElementById("notify").innerHTML = inventario.ingresarProducto(nuevoProducto);
-    console.log(inventario);
+    if (cantidad.value == '' && execute) {
+        msg = "¡ERROR! - El campo 'Cantidad' solo recibe números";
+        execute = false;
+    }
 
+    if (codigo.value == '' && nombre.value == '' && precio.value == '' && cantidad.value == '') {
+        msg = "¡ERROR! - Los campos están vacíos";
+        execute = false;
+    }
+
+    if (execute) {
+        let nuevoProducto = new Producto(codigo.value, nombre.value, precio.value, cantidad.value)
+        document.getElementById("notify").innerHTML = inventario.ingresarProducto(nuevoProducto);    
+    } else {
+        document.getElementById("notify").innerHTML = msg;
+    }
+    
     codigo.value = "";
     nombre.value = "";
     precio.value = "";
@@ -276,5 +314,14 @@ function ordenarProductos() {
 }
 
 function soloNumeros(inputId) {
-    let input = document.getElementById(inputId);
+    let input = document.getElementById(inputId).value;
+
+    for (let i=0; i<input.length; i++) {
+        if (typeof(input[i]) !== typeof(1)) {
+            input[i] = "";
+        }
+    }
+
+    document.getElementById(inputId).value = input;
+    document.getElementById(inputId).innerHTML = input;
 }
