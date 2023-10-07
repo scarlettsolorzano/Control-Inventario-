@@ -11,6 +11,7 @@ class Producto {
         this.nombre = nombre;
         this.precio = precio;
         this.cantidad = cantidad;
+        this.puntero = null;
     }
 
     // Muestra los datos del producto (nombre, precio y cantidad)
@@ -24,44 +25,45 @@ class Producto {
 class Inventario{
 
     constructor() {
-        this.productos = new Array()
+        this.primero = null;
+        this.ultimo = null;
     }
 
     // Inserta objeto(s) de tipo Producto
     ingresarProducto(producto){
-        
-        // Inserción
-        this.productos.push(producto);
 
-        // Ordena la lista de Productos
-        for (let x=0; x<this.productos.length; x++) {
-            for (let y=0; y<this.productos.length; y++) {
-
-                if (y+1 !== this.productos.length) {
-
-                    if (parseInt(this.productos[y].codigo) > parseInt(this.productos[y+1].codigo)) {
-                        let intercambio = this.productos[y+1];
-
-                        this.productos[y+1] = this.productos[y];
-                        this.productos[y] = intercambio;
-                    }
-
-                }
-
+        if (this.buscarProducto(producto.codigo) === "<p>''El producto no existe''</p>") {
+            // Inserción
+            if (!this.primero) {
+                this.primero = producto;
+                this.ultimo = producto;
+            } else {
+                this.ultimo.siguiente = producto;
+                this.ultimo = producto;
             }
+
+            console.log(this.primero);           
+            console.log(this.ultimo);
+
+            return "<p>''El producto se ha ingresado correctamente''</p>";
         }
 
-        return "<p>''El producto se ha ingresado correctamente''</p>";
+        return "<p>''El producto no se pudo ingresar''</p>";
     }
 
     // Muestra un Producto en específico en la notificación
     buscarProducto(codigoBuscar){
 
-        // Recorre el arreglo hasta encontrar un Producto con el mismo código que se ingresó
-        for(let i=0; i<this.productos.length ; i++){
-            if(codigoBuscar==this.productos[i].codigo){
-                return "<p> Codigo: " + this.productos[i].codigo + " Nombre:" + this.productos[i].nombre + " Precio:" + this.productos[i].precio + " Cantidad:" + this.productos[i].cantidad + "</p>"
+        let nodo = this.primero;
+
+        while (nodo) {
+
+            if (nodo.codigo = codigoBuscar) {
+                return "<p> Codigo: " + nodo.codigo + " Nombre:" + nodo.nombre + " Precio:" + nodo.precio + " Cantidad:" + nodo.cantidad + "</p>";
+            } else {
+                nodo = nodo.siguiente;
             }
+
         }
 
         return "<p>''El producto no existe''</p>";
@@ -70,31 +72,44 @@ class Inventario{
     // Elimina un Producto en específico
     borrarProducto(codigoBorrar){
 
-        // Recorre el arreglo hasta encontrar un Producto con el mismo código que se ingresó
-        for(let i = 0; i<this.productos.length;i++){
-            if(codigoBorrar == this.productos[i].codigo){
+        let nodo = this.primero;
 
-                for(let j = i; j < this.productos.length; j++){
-                    this.productos[j] = this.productos[j+1];
+        if (nodo.codigo == codigoBorrar) {
+            this.primero = nodo.siguiente;
+
+            return  "<p>''Se ha borrado exitosamente''</p>";
+        } else {
+            while (nodo) {
+                if (nodo.siguiente.codigo == codigoBorrar) {
+
+                    if (nodo.siguiente == this.ultimo) {
+                        this.ultimo = nodo;
+                    }
+
+                    nodo.siguiente = nodo.siguiente.siguiente;
+                    
+                    return "<p>''Se ha borrado exitosamente''</p>";
                 }
 
-                // Eliminación
-                this.productos.pop();
-
-                return "<p>''Se ha borrado exitosamente''</p>"
+                nodo = nodo.siguiente;
             }
+
+            return "<p>''El producto no existe''</p>";
         }
     }
 
     // Muestra todos los Productos del arreglo ASCENDENTE
     ListarProducto(){
+        let nodo = this.primero;
         let res = "";
 
-        for(let i = 0; i < this.productos.length; i++){
-            res += "<tr><th>" + this.productos[i].codigo + "</th><td>" 
-                            + this.productos[i].nombre + "</td><td>" 
-                            + this.productos[i].precio + "</td><td>" 
-                            + this.productos[i].cantidad +"</td></tr>";
+        while (nodo) {
+            res += "<tr><th>" + nodo.codigo + "</th><td>" 
+                            + nodo.nombre + "</td><td>" 
+                            + nodo.precio + "</td><td>" 
+                            + nodo.cantidad +"</td></tr>";
+
+            nodo = nodo.siguiente;
         }
 
         return res;
@@ -102,24 +117,36 @@ class Inventario{
 
     // Muestra todos los Productos del arreglo DESCENDENTE
     ListarProductoInverso(){
+        let nodo = this.primero;
         let res = "";
+        let res2 = "";
 
-        for(let i = this.productos.length - 1; i >= 0; i--){
-            res += "<tr><th>" + this.productos[i].codigo + "</th><td>" 
-                            + this.productos[i].nombre + "</td><td>" 
-                            + this.productos[i].precio + "</td><td>" 
-                            + this.productos[i].cantidad +"</td></tr>";
+        while (nodo) {
+            res2 += "<tr><th>" + nodo.codigo + "</th><td>" 
+                            + nodo.nombre + "</td><td>" 
+                            + nodo.precio + "</td><td>" 
+                            + nodo.cantidad +"</td></tr>";
+
+            res2 += res2;
+
+            nodo = nodo.siguiente;
         }
 
-        return res;
+        return res += res2;
     }
 
     // Muestra un Producto en específico en los campos de texto
     seleccionarProducto(buscar) {
-        for(let i = 0; i < this.productos.length; i++){
-            if(this.productos[i].codigo == buscar){
-                return this.productos[i];
+        let nodo = this.primero;
+
+        while (nodo) {
+
+            if (nodo.codigo = buscar) {
+                return nodo;
+            } else {
+                nodo = nodo.siguiente;
             }
+
         }
 
         return null;
