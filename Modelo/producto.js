@@ -1,5 +1,9 @@
-//control de inventario de productos usando el sistema de catalogo mediante el uso de la clase producto
-//alamcenamiento de clases 
+/* 
+*   Control de inventario de productos 
+*   usando el sistema de catálogo mediante el uso de la clase producto
+*   almacenamiento de clases 
+*/
+
 class Producto {
 
     constructor(codigo, nombre, precio, cantidad) {
@@ -9,25 +13,27 @@ class Producto {
         this.cantidad = cantidad;
     }
 
-    //metodo para regresar los datos del producto
+    // Muestra los datos del producto (nombre, precio y cantidad)
     mostrarInformacion() {
         return ` ${this.codigo } Nombre: ${this.nombre} Precio: ${this.precio} Cantidad: ${this.cantidad}`;
     }   
    
 } 
-    
+
+
 class Inventario{
 
-    constructor(){
-        this.productos=new Array()
+    constructor() {
+        this.productos = new Array()
     }
 
-    ingresarProducto(producto){ //comprobar que no se repita y agregar de forma ordenada 
+    // Inserta objeto(s) de tipo Producto
+    ingresarProducto(producto){
         
-        
-        
+        // Inserción
         this.productos.push(producto);
 
+        // Ordena la lista de Productos
         for (let x=0; x<this.productos.length; x++) {
             for (let y=0; y<this.productos.length; y++) {
 
@@ -48,27 +54,39 @@ class Inventario{
         return "<p>''El producto se ha ingresado correctamente''</p>";
     }
 
+    // Muestra un Producto en específico en la notificación
     buscarProducto(codigoBuscar){
+
+        // Recorre el arreglo hasta encontrar un Producto con el mismo código que se ingresó
         for(let i=0; i<this.productos.length ; i++){
             if(codigoBuscar==this.productos[i].codigo){
                 return "<p> Codigo: " + this.productos[i].codigo + " Nombre:" + this.productos[i].nombre + " Precio:" + this.productos[i].precio + " Cantidad:" + this.productos[i].cantidad + "</p>"
             }
         }
+
         return "<p>''El producto no existe''</p>";
     }
 
+    // Elimina un Producto en específico
     borrarProducto(codigoBorrar){
+
+        // Recorre el arreglo hasta encontrar un Producto con el mismo código que se ingresó
         for(let i = 0; i<this.productos.length;i++){
             if(codigoBorrar == this.productos[i].codigo){
+
                 for(let j = i; j < this.productos.length; j++){
                     this.productos[j] = this.productos[j+1];
                 }
+
+                // Eliminación
                 this.productos.pop();
+
                 return "<p>''Se ha borrado exitosamente''</p>"
             }
         }
     }
 
+    // Muestra todos los Productos del arreglo ASCENDENTE
     ListarProducto(){
         let res = "";
 
@@ -82,6 +100,7 @@ class Inventario{
         return res;
     }
 
+    // Muestra todos los Productos del arreglo DESCENDENTE
     ListarProductoInverso(){
         let res = "";
 
@@ -95,6 +114,7 @@ class Inventario{
         return res;
     }
 
+    // Muestra un Producto en específico en los campos de texto
     seleccionarProducto(buscar) {
         for(let i = 0; i < this.productos.length; i++){
             if(this.productos[i].codigo == buscar){
@@ -105,6 +125,7 @@ class Inventario{
         return null;
     }
 
+    // Actualiza un Producto
     ActualizarProducto(buscar, codigo2, nombre2, precio2, cantidad2){
         for(let i = 0; i < this.productos.length; i++){
             if(this.productos[i].codigo == buscar){
@@ -126,8 +147,10 @@ class Inventario{
     }
 }
 
+// Creación del Inventario
 let inventario = new Inventario();
 
+// Ejecución de funciones a partir del click en el botón
 document.getElementById("btnBuscar").onclick = buscarproducto;
 document.getElementById("btnClean1").onclick = limpiarProducto;
 
@@ -139,8 +162,10 @@ document.getElementById("btnClean2").onclick = limpiarProducto;
 document.getElementById("btnListar").onclick = listarProductos;
 document.getElementById("btnOrder").onclick = ordenarProductos;
 
+// Ordenamiento de los productosen la tabla (true = ASCENDENTE y false = DESCENDENTE)
 let orden = true;
 
+// Busca un Producto
 function buscarproducto() {
     let codigoBuscar = document.getElementById("txtBuscar").value;
     
@@ -166,6 +191,7 @@ function buscarproducto() {
     
 }
 
+// Actualiza un Producto
 function actualizarProducto() {
     let codigoActualizar = document.getElementById("txtBuscar").value;
 
@@ -192,6 +218,7 @@ function actualizarProducto() {
     document.getElementById("btnDelete").style.display = "none";
 }
 
+// Elimina un Producto
 function eliminarProducto() {
     let codigoBorrar = document.getElementById("txtBuscar").value;
 
@@ -213,7 +240,7 @@ function eliminarProducto() {
     document.getElementById("notify").innerHTML =  inventario.borrarProducto(codigoBorrar);
 }
 
-
+// Agrega un Producto
 function agregarProducto() {
 
     let msg = "";
@@ -271,6 +298,7 @@ function agregarProducto() {
 
 }
 
+// Limpia los campos de texto
 function limpiarProducto() {
     let codigo = document.getElementById("codigo");
     let nombre = document.getElementById("nombre");
@@ -290,13 +318,14 @@ function limpiarProducto() {
     document.getElementById("notify").innerHTML = "";
 }
 
-
+// Lista todos los Productos
 function listarProductos(){
     document.getElementById("detalles").innerHTML = inventario.ListarProducto();
 
     document.getElementById("notify").innerHTML = "";
 }
 
+// Ordena alternando los productos (ASCENDENTE ←→ DESCENDENTE)
 function ordenarProductos() {
 
     if (orden) {
@@ -313,10 +342,12 @@ function ordenarProductos() {
 
 }
 
+// Filtro para los campos de texto que no llevan letras
 function soloNumeros(inputId) {
     let input = document.getElementById(inputId).value;
 
     for (let i=0; i<input.length; i++) {
+        // Comprobación de que el valor sea de tipo NUMBER
         if (typeof(input[i]) !== typeof(1)) {
             input[i] = "";
         }
