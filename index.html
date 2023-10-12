@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario</title>
+</head>
+
+<body>
+    <!-- Cajas de texto de los productos -->
+    <header>
+        <h1>Inventario</h1>
+        <br>
+        <form>
+            <label for="buscador">
+                Código del Producto
+            </label>
+            <input type="text" name="buscador" id="txtBuscar" placeholder="1234" required>
+            <button type="button" id="btnBuscar">Buscar</button>
+            <button type="reset" id="btnClean1" style="display: none;">Limpiar</button>
+        </form>
+    </header>
+
+    <hr>
+    <div id="notify"></div>
+    <hr>
+
+    <form>
+        <div>
+            <label for="Nombre">Código</label>
+            <input type="number" name="Nombre" id="codigo" placeholder="1234" min="0"
+                onkeypress="soloNumeros('codigo')">
+        </div>
+
+        <div>
+            <label for="Nombre">Nombre</label>
+            <input type="text" name="Nombre" id="nombre" placeholder="Producto">
+        </div>
+
+        <div>
+            <label for="Precio">Precio</label>
+            <input type="number" name="Precio" id="precio" placeholder="$" min="0" onkeypress="soloNumeros('precio')">
+        </div>
+
+        <div>
+            <label for="Cantidad">Cantidad</label>
+            <input type="number" name="Cantidad" id="cantidad" placeholder="1" min="0"
+                onkeypress="soloNumeros('cantidad')">
+        </div>
+
+        <br>
+
+        <button type="button" id="btnAdd">Agregar</button>
+        <button type="button" id="btnUpdate" style="display: none;">Actualizar</button>
+        <button type="button" id="btnDelete" style="display: none;">Borrar</button>
+        <button type="reset" id="btnClean2">Limpiar</button>
+
+        <br>
+        <hr>
+        <br>
+
+        <button type="button" id="btnListar">Listar</button>
+        <button type="button" id="btnOrder">↑↓</button>
+
+    </form>
+    <br>
+    <div>
+        <table style="border: 1px solid black;">
+            <thead>
+                <th>Código</th>
+                <td>Nombre</td>
+                <td>Precio</td>
+                <td>Cantidad</td>
+            </thead>
+            <tbody id="detalles">
+            </tbody>
+        </table>
+    </div>
+
+    <script src="controlInventario.js"></script>
+</body>
+
+</html>
