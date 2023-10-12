@@ -16,7 +16,7 @@
             <label for="buscador">
                 Código del Producto
             </label>
-            <input type="text" name="buscador" id="txtBuscar" placeholder="1234" required>
+            <input type="number" name="buscador" id="txtBuscar" placeholder="1234" onkeypress="soloNumeros('txtBuscar')" required>
             <button type="button" id="btnBuscar">Buscar</button>
             <button type="reset" id="btnClean1" style="display: none;">Limpiar</button>
         </form>

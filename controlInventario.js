@@ -193,3 +193,18 @@ function ordenarProductos() {
 
     document.getElementById("notify").innerHTML = "";
 }
+
+// Filtro para los campos de texto que no llevan letras
+function soloNumeros(inputId) {
+    let input = document.getElementById(inputId).value;
+
+    for (let i=0; i<input.length; i++) {
+        // Comprobación de que el valor sea de tipo NUMBER
+        if (typeof(input[i]) !== typeof(1)) {
+            input[i] = "";
+        }
+    }
+
+    document.getElementById(inputId).value = input;
+    document.getElementById(inputId).innerHTML = input;
+}
